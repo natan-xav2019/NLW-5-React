@@ -1,7 +1,22 @@
-import { Header } from "../components/header";
+export default function Home(props) {
 
-export default function Home() {
+
   return (
-    <Header />
+    <div>
+    <h1>index</h1>
+    <p>{JSON.stringify(props.episodes)}</p>
+    </div>
   )
+}
+
+export async function getSaticProps() {
+  const response = await fetch('http://localhost:3333/episodes')
+  const data = await response.json()
+
+  return {
+    props: {
+      episodes: data,
+    },
+    revalidate: 60 * 60 * 8,
+  }
 }
